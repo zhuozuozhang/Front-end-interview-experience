@@ -45,3 +45,5 @@ html新增了一个manifest属性，可以用来指定当前页面的manifest文
 <html lang="en" manifest="index.manifest">
 ```
 
+## Content-Type
+
