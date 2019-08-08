@@ -40,6 +40,24 @@
 
 - rem换算不对怎么办
 
+  https://blog.csdn.net/u013778905/article/details/77972841
+
+  出现情况：
+
+  1.用rem布局的H5页面 
+  2.页面内嵌在APP的webview中 
+  3.手机 **设置** 修改了默认字体大小，如下图我的小米手机示例。
+
+  
+
+  有些安卓手机上，浏览器或webview的默认字体是随着系统字体改变的，所以可能会导致默认字体不等于16px
+
+  在页面rem计算完成后，用两种方式获取font-size。然后结果不一样，导致某些元素通过rem计算后的值，产生了误差
+
+  通过比较**document.documentElement.style.fontSize**和window.getComputedStyle(document.documentElement)["font-size"]的差值，如果误差大于1，我们就重置html的font-size
+
+
+
 ### 浏览器
 
 - 浏览器渲染方式
