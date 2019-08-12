@@ -90,14 +90,50 @@
 - **回流/重排和重绘**
 
   - 重绘不一定触发重排。重排很耗性能。
-
   - 我的弹幕功能优化，每一帧进行一次重排，而不是每条弹幕移动都去进行一次重排。也就是每一次循环计算先把结果放到一个数组中，然后一次性修改所有CSS，这样把写CSS的操作放到一起，会大大减少重排次数，提高性能。
-
   - 使用`window.requestAnimationFrame()`。它会在页面下一次渲染时执行。所有的写操作都会在页面下一次刷新重新渲染时候执行。通过时间函数来计算当前时间，来更改弹幕位置。
-
   - `requestIdleCallback`函数。会在某帧末尾有空闲时间的时候来执行回调函数。
+  - DOM离线化。不是直接操作已经渲染出来的DOM而是操作没有渲染的DOM，将最终结果插入DOM树。例如`display:none`、`document.cloneNode()`、`documentFragment` 
+  - `position:fixed, position:absolute` 的重绘对其他元素影响小
+  - `visibility:hidden` 只会重绘而不会重排
 
-    
+- **硬件加速** 
+
+  - 常见触发硬件加速的CSS属性
+    - `tramsform` (3D才能触发)
+    - `opacity`
+    - `filters`
+    - `will-change`
+    - `transition`
+    - 小技巧 给元素添加 `transform: translateZ(0)`
+  - `Canvas2D`
+  - WebGL
+  - Video标签
+  - https://segmentfault.com/a/1190000013869580
+
+  已知JS是单线程工作的，但是浏览器可以开启多个线程，渲染一个网页需要两个重要的线程来共同完成：**Main Thread** 主线程 **Compositor Thread** 合成器线程
+
+  #### 主线程做的工作：
+
+  ```
+  运行JS
+  计算 HTML 元素的 CSS 样式
+  布局页面
+  将元素绘制到一个或多个位图中
+  把这些位图交给 Compositor Thread 来处理
+  ```
+
+  #### 合成器线程做的工作：
+
+  ```
+  通过 GPU 将位图绘制到屏幕上
+  通知主线程去更新页面中可见或即将可见的部分的位图
+  计算出页面中那些部分是可见的
+  计算出在滚动页面时候，页面中哪些部分是即将可见的
+  滚动页面时将相应位置的元素移动到可视区
+  ```
+
+  
 
 ### HTML
 
@@ -107,5 +143,7 @@
 - session
 - cookie 
   - 前端是否能修改cookie?
+  - ！当然可以。`document.cookie` 就是存储cookie的类数组。
+  - *为了删除一个cookie，可以将其过期时间设定为一个过去的时间。*
 - localStorage,sessionStorage
 
