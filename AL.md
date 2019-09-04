@@ -147,3 +147,14 @@
   - *为了删除一个cookie，可以将其过期时间设定为一个过去的时间。*
 - localStorage,sessionStorage
 
+
+
+web 离线存储
+pwa
+hashchange
+
+判断当前视口和元素的定位
+offset
+client  
+
+事件处理
