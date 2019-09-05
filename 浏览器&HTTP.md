@@ -47,3 +47,35 @@ html新增了一个manifest属性，可以用来指定当前页面的manifest文
 
 ## Content-Type
 
+## 请求方法
+
+GET
+- GET方法请求一个指定资源的表示形式. 使用GET的请求应该只被用于获取数据.
+HEAD
+- HEAD方法请求一个与GET请求的响应相同的响应，但没有响应体.
+POST
+- POST方法用于将实体提交到指定的资源，通常导致在服务器上的状态变化或副作用. 
+PUT
+- PUT方法用请求有效载荷替换目标资源的所有当前表示。
+DELETE
+- DELETE方法删除指定的资源。
+CONNECT
+- CONNECT方法建立一个到由目标资源标识的服务器的隧道。
+
+OPTIONS
+- OPTIONS方法用于描述目标资源的通信选项。
+    应用：
+    1. 询问服务器可以使用的请求方法，服务器会返回Allow响应字段来告知可以使用的方法。
+    2. Cors跨域的预检
+    
+      Access-Control-Request-Method: POST 
+      
+      Access-Control-Request-Headers: X-PINGOTHER, Content-Type
+      
+      Option请求带有这两个属性来询问服务器是否可以进行POST方法的跨域请求，并且在请求头中带有X-PINGOTHER和Content-Type这两个属性。
+      
+TRACE
+- TRACE方法沿着到目标资源的路径执行一个消息环回测试。
+PATCH
+- PATCH方法用于对资源应用部分修改。
+
