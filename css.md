@@ -24,3 +24,6 @@ Background-attachment ：fixed 背景不跟着内容移动。这个时候背景�
 
 ​	`fit-content`将元素宽度收缩为内容宽度
 
+inline 元素的高度永远都不会撑开他的父元素，垂直方向上的border、padding和margin只会和上下的内容覆盖，不会占据大小。  
+
+inline-block 元素的高度和普通block元素一样，如果比父元素的高度要大，将会把父元素撑开。
