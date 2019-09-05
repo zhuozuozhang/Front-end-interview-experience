@@ -27,3 +27,5 @@ Background-attachment ：fixed 背景不跟着内容移动。这个时候背景�
 inline 元素的高度永远都不会撑开他的父元素，垂直方向上的border、padding和margin只会和上下的内容覆盖，不会占据大小。  
 
 inline-block 元素的高度和普通block元素一样，如果比父元素的高度要大，将会把父元素撑开。
+
+`user-select: none`设置了这个属性的元素不会被选中。
