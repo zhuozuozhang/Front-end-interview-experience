@@ -14,8 +14,6 @@ WebGL 贴图
 
 使用 drawImage 将 Images/video 画面绘制到 canvas
 
-本文概述了跨域资源共享机制及其所涉及的 HTTP 头。
-
 功能概述
 
 - 简单请求
@@ -23,23 +21,37 @@ WebGL 贴图
 使用下列方法之一：
 
   GET
+  
   HEAD
+  
   POST
   
 Fetch 规范定义了对 CORS 安全的首部字段集合，不得人为设置该集合之外的其他首部字段。该集合为：
 
   Accept
+  
   Accept-Language
+  
   Content-Language
+  
   Content-Type （需要注意额外的限制）
+  
   DPR
+  
   Downlink
+  
   Save-Data
+  
   Viewport-Width
+  
   Width
+  
 Content-Type 的值仅限于下列三者之一：
+
   text/plain
+  
   multipart/form-data
+  
   application/x-www-form-urlencoded
   
 请求中的任意XMLHttpRequestUpload 对象均没有注册任何事件监听器；XMLHttpRequestUpload 对象可以使用 XMLHttpRequest.upload 属性访问。
@@ -59,3 +71,12 @@ Fetch 与 CORS 的一个有趣的特性是，可以基于  HTTP cookies 和 HTTP
 对于附带身份凭证的请求，服务器不得设置 Access-Control-Allow-Origin 的值为“*”。
 
 将XMLHttpRequest 的 withCredentials 标志设置为 true，从而向服务器发送 Cookies。
+
+启用了CORS的图片
+
+HTML 规范中图片有一个 crossorigin 属性，结合合适的 CORS 响应头，就可以实现在画布中使用跨域 <img> 元素的图像。
+
+什么是“被污染”的 canvas?
+
+  尽管不通过 CORS 就可以在画布中使用图片，但是这会污染画布。一旦画布被污染，你就无法读取其数据。例如，你不能再使用画布的 toBlob(), toDataURL() 或 getImageData() 方法，调用它们会抛出安全错误。所以需要设置图片的crossOrigin = "Anonymous"这个属性以启用对这个图片所在的画布的编辑。
+
