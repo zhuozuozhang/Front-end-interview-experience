@@ -47,6 +47,17 @@ html新增了一个manifest属性，可以用来指定当前页面的manifest文
 
 ## Content-Type
 
+Content-Type告诉浏览器资源的MIME类型，这样浏览器就知道如何去解析得到的资源了。
+
+格式： type/subtype
+- text ---  表明文件是普通文本，理论上是人类可读 text/html, text/plain,  text/css, text/javascript
+- image --- 表明是某种图像。不包括视频，但是动态图（比如动态gif）也使用image类型 image/gif, image/png, image/jpeg, image/bmp, image/webp, image/x-icon, image/vnd.microsoft.icon
+- audio --- 表明是某种音频文件 	audio/midi, audio/mpeg, audio/webm, audio/ogg, audio/wav
+- video --- 表明是某种视频文件   video/webm, video/ogg
+- application 表明是某种二进制数据	 application/json, application/x-www-form-urlencoded
+- multipart/formdata
+- multipart/byteranges
+
 ## 请求方法
 
 GET
@@ -78,4 +89,20 @@ TRACE
 - TRACE方法沿着到目标资源的路径执行一个消息环回测试。
 PATCH
 - PATCH方法用于对资源应用部分修改。
+
+## HTTP2 
+
+https://developers.google.com/web/fundamentals/performance/http2/?hl=zh-cn#%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%88%86%E5%B8%A7%E5%B1%82
+
+> HTTP/2 通过支持标头字段压缩和在同一连接上 进行多个并发交换，让应用更有效地利用网络资源，减少 感知的延迟时间。具体来说，它可以对同一连接上的请求和响应消息进行交错 发送并为 HTTP 标头字段使用 有效编码。 > HTTP/2 还允许为请求设置优先级，让更重要的请求更快速地完成，从而进一步 提升性能。出台的协议更有利于网络，因为与 HTTP/1.x 相比，可以使用更少的 TCP 连接。 > 这意味着与其他流的竞争减小，并且连接的持续时间变长，这些特性反过来提高 了可用网络容量的利用率。 最后，HTTP/2 还可以通过使用二进制消息分帧对消息进行更高效 的处理。 （超文本传输协议版本 2，草案 17）
+
+二进制分帧层：
+
+数据流：已建立的连接内的双向字节流，可以承载一条或多条消息。
+
+消息：与逻辑请求或响应消息对应的完整的一系列帧。
+
+帧：HTTP/2 通信的最小单位，每个帧都包含帧头，至少也会标识出当前帧所属的数据流。
+
+多路复用：一个TCP连接可以
 
