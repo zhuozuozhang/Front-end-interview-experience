@@ -106,3 +106,40 @@ https://developers.google.com/web/fundamentals/performance/http2/?hl=zh-cn#%E4%B
 
 多路复用：一个TCP连接可以
 
+在HTTP 1.0中，客户端的每一个HTTP请求都必须通过独立的TCP连接进行处理，而在HTTP 1.1中，对这种方式进行了改进。客户端可以在一个TCP连接中发送多个HTTP请求，这种技术叫做HTTP复用（HTTP Multiplexing）。它与TCP连接复用最根本的区别在于，TCP连接复用是将多个客户端的HTTP请求复用到一个服务器端TCP连接上，而HTTP复用则是一个客户端的多个HTTP请求通过一个TCP连接进行处理。前者是负载均衡设备的独特功能；而后者是HTTP 1.1协议所支持的新功能，目前被大多数浏览器所支持。在HTTP2.0中，客户端和服务器可以将 HTTP 消息分解为互不依赖的帧，然后交错发送，最后再在另一端把它们重新组装起来。
+
+多路复用与keep-alive的区别：
+![](https://qiniu.nihaoshijie.com.cn/kp2.png)
+
+1）线头阻塞（Head-of-Line Blocking），HTTP1.X虽然可以采用keep alive来解决复用TCP的问题，但是还是无法解决请求阻塞问题。
+
+2）所谓请求阻塞意思就是一条TCP的connection在同一时间只能允许一个请求经过，这样假如后续请求想要复用这个链接就必须等到前一个完成才行，正如上图左边表示的。
+
+3）之所以有这个问题就是因为HTTP1.x需要每条请求都是可是识别，按顺序发送，否则server就无法判断该相应哪个具体的请求。
+
+4）HTTP2采用多路复用是指，在同一个域名下，开启一个TCP的connection，每个请求以stream的方式传输，每个stream有唯一标识，connection一旦建立，后续的请求都可以复用这个connection并且可以同时发送，server端可以根据stream的唯一标识来相应对应的请求。
+
+ 
+
+![](https://developers.google.com/web/fundamentals/performance/http2/images/multiplexing01.svg?hl=zh-cn)
+
+多路复用的好处是:
+
+ - 并行交错地发送多个请求，请求之间互不影响。
+- 并行交错地发送多个响应，响应之间互不干扰。
+- 使用一个连接并行发送多个请求和响应。
+- 不必再为绕过 HTTP/1.x 限制而做很多工作（请参阅针对 HTTP/1.x 进行优化，例如级联文件、image sprites 和域名分片。
+- 消除不必要的延迟和提高现有网络容量的利用率，从而减少页面加载时间。
+
+HTTP/2 中的新二进制分帧层解决了 HTTP/1.x 中存在的队首阻塞问题，也消除了并行处理和发送请求及响应时对多个连接的依赖。 结果，应用速度更快、开发更简单、部署成本更低。
+
+数据流优先级
+
+
+HTTP/3 (QUIC/Quick UDP Internet Connections)
+
+HTTP/3 是即将到来的第三个主要版本的HTTP协议，使用于万维网。在HTTP/3中，将弃用TCP协议，改为使用基于UDP协议的QUIC协议实现。QUIC（快速UDP网络连接）是一种实验性的传输层网络传输协议，由Google开发，该协议旨在取代TCP协议，使网页传输更快。
+
+在2018年10月28日的邮件列表讨论中，互联网工程任务组（IETF） HTTP和QUIC工作组主席Mark Nottingham提出了将HTTP-over-QUIC更名为HTTP/3的正式请求，以“明确地将其标识为HTTP语义的另一个绑定……使人们理解它与QUIC的不同”，并在最终确定并发布草案后，将QUIC工作组继承到HTTP工作组。[2] 在随后的几天讨论中，Mark Nottingham的提议得到了IETF成员的接受，他们在2018年11月给出了官方批准，认可HTTP-over-QUIC成为HTTP/3。[3]
+
+
