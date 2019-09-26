@@ -1,0 +1,24 @@
+<script>
+  const imgSrc = [] // 储存图片地址
+  function imgonload() {
+    let img = document.querySelectorAll("img");
+    for(let i=0; i<img.length; i++) {
+      if(img[i].getBoundingClientRect().top < window.innerHeight) {
+        img[i].src = imgSrc[i];
+      }
+    }
+  }
+
+  function scrollLoading(fn) {
+    let timer = null;
+    let that = this;
+    return function () {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        fn.apply(that);
+      }, 1200)
+    }
+  }
+  window.onload = imgonload;
+  window.onscroll = scrollLoading(imgonload);
+</script>
