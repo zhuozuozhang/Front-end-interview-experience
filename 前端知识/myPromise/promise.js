@@ -3,15 +3,22 @@ class Promise {
     // 错误校验
     if (typeof executor !== 'function') 
       throw TypeError(`Promise resolver ${executor} is not a function`)
-    _init()
+    this._init()
+    executor(this.resolve, this.reject)
+  }21
+
+  resolve (value) {
+    if (this.state === 'pending') {
+      this.state = 'fulfilled'
+      this.value = value
+    }
   }
 
-  resolve () {
-
-  }
-
-  reject () {
-
+  reject (reason) {
+    if (this.state === 'pending') {
+      this.state = 'rejected'
+      this.reason = reason
+    }
   }
 
   _init () {
@@ -19,4 +26,8 @@ class Promise {
     this.reason = null
     this.state = 'pending'
   }
+}
+
+module.exports = {
+  promise: Promise
 }
